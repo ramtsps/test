@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/" method="post">
+      <label for="name"> Enter a name:</label>
+      <input type="text" id="name" name="name" /> <br />
+      <label for="name"> Enter a age:</label>
+      <input type="number" id="age" name="age" /> <br />
+      <label for="name"> Enter a email:</label>
+      <input type="email" id="email" name="email" /> <br />
+
+      <button>Submit</button>
+    </form>
+
+    <table id="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>John</td>
+        <td>25</td>
+        <td>thj@gmail.com</td>
+      </tr>
+    </table>
+  </body>
+  <script>
+    const table = document.getElementById("table");
+
+    function get() {
+      fetch("");
+    }
+    function addRow(name, age, email) {
+      const newRow = table.insertRow(-1);
+      const nameCell = newRow.insertCell(0);
+      const ageCell = newRow.insertCell(1);
+    }
+  </script>
+</html>
