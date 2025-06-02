@@ -1,43 +1,51 @@
 const express = require("express");
-
-// Import routes
-
-const list = {
-  1: {
-    name: "ram",
-    age: 21,
-    email: "ema@g.com",
-  },
-  2: {
-    name: "ram2",
-    age: 20,
-    email: "mailema@g.com",
-  },
-};
-
+const bodyParser = require("body-parser");
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
+
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-// Middleware
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
 
-// Routes
+let users = [];
+let id = 1;
+
+// Home Page: Show form + table
 app.get("/", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.render("index");
+  res.render("index", { users });
 });
 
-app.get("/list", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.send(list);
-});
-app.post("/", (req, res) => {
-  console.log(req.body);
-  res.send("Data Added");
+// Add User
+app.post("/add", (req, res) => {
+  const { name, email } = req.body;
+  users.push({ id: id++, name, email });
+  res.redirect("/");
 });
 
-// Start server
+// Delete User
+app.get("/delete/:id", (req, res) => {
+  const userId = parseInt(req.params.id);
+  users = users.filter((user) => user.id !== userId);
+  res.redirect("/");
+});
+
+// Show Edit Form
+app.get("/edit/:id", (req, res) => {
+  const user = users.find((u) => u.id == req.params.id);
+  res.render("edit", { user });
+});
+
+// Update User
+app.post("/update/:id", (req, res) => {
+  const userId = parseInt(req.params.id);
+  const { name, email } = req.body;
+  const user = users.find((u) => u.id === userId);
+  if (user) {
+    user.name = name;
+    user.email = email;
+  }
+  res.redirect("/");
+});
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server is running on http://localhost:${PORT}`);
 });

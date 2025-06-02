@@ -1,47 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Simple Form App</title>
   </head>
   <body>
-    <form action="/" method="post">
-      <label for="name"> Enter a name:</label>
-      <input type="text" id="name" name="name" /> <br />
-      <label for="name"> Enter a age:</label>
-      <input type="number" id="age" name="age" /> <br />
-      <label for="name"> Enter a email:</label>
-      <input type="email" id="email" name="email" /> <br />
-
-      <button>Submit</button>
+    <h2>Add User</h2>
+    <form action="/add" method="POST">
+      <input type="text" name="name" placeholder="Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <button type="submit">Add</button>
     </form>
 
-    <table id="table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Age</th>
-          <th>Email</th>
-        </tr>
-      </thead>
+    <h2>User Table</h2>
+    <table border="1" cellpadding="10">
       <tr>
-        <td>John</td>
-        <td>25</td>
-        <td>thj@gmail.com</td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
       </tr>
+      <% users.forEach(user => { %>
+      <tr>
+        <td><%= user.id %></td>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td>
+          <a href="/edit/<%= user.id %>">Edit</a> |
+          <a href="/delete/<%= user.id %>" onclick="return confirm('Delete?')"
+            >Delete</a
+          >
+        </td>
+      </tr>
+      <% }) %>
     </table>
   </body>
-  <script>
-    const table = document.getElementById("table");
-
-    function get() {
-      fetch("");
-    }
-    function addRow(name, age, email) {
-      const newRow = table.insertRow(-1);
-      const nameCell = newRow.insertCell(0);
-      const ageCell = newRow.insertCell(1);
-    }
-  </script>
 </html>
